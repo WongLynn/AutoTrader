@@ -175,7 +175,7 @@ class BitfinexGateay(VtGateway):
 
     def loadHistoryBar(self, vtSymbol, type_, size = None, since = None):
         symbol = vtSymbol.split(':')[0]
-        
+
         typeMap = {}
         typeMap['1min'] = '1m'
         typeMap['5min'] = '5m'
@@ -199,7 +199,7 @@ class BitfinexGateay(VtGateway):
 
         df = pd.DataFrame(r.json(), columns=["MTS", "open", "close", "high", "low", "volume"])
         df["datetime"] = df["MTS"].map(lambda x: datetime.fromtimestamp(x / 1000))
-        df[["open", "close", "high", "low", "volume"]] = df[["open", "close", "high", "low", "volume"]].map(lambda x:float(x))
+        df[["open", "close", "high", "low", "volume"]] = df[["open", "close", "high", "low", "volume"]].applymap(lambda x:float(x))
 
         return df
 
